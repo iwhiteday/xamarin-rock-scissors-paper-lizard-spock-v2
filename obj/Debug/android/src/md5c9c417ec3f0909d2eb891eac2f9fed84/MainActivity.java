@@ -2,15 +2,17 @@ package md5c9c417ec3f0909d2eb891eac2f9fed84;
 
 
 public class MainActivity
-	extends android.app.Activity
+	extends android.support.v7.app.AppCompatActivity
 	implements
-		mono.android.IGCUserPeer
+		mono.android.IGCUserPeer,
+		com.hitomi.cmlibrary.OnMenuSelectedListener
 {
 /** @hide */
 	public static final String __md_methods;
 	static {
 		__md_methods = 
 			"n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler\n" +
+			"n_onMenuSelected:(I)V:GetOnMenuSelected_IHandler:Com.Hitomi.Cmlibrary.IOnMenuSelectedListenerInvoker, CircleMenu\n" +
 			"";
 		mono.android.Runtime.register ("task2.MainActivity, task2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", MainActivity.class, __md_methods);
 	}
@@ -30,6 +32,14 @@ public class MainActivity
 	}
 
 	private native void n_onCreate (android.os.Bundle p0);
+
+
+	public void onMenuSelected (int p0)
+	{
+		n_onMenuSelected (p0);
+	}
+
+	private native void n_onMenuSelected (int p0);
 
 	private java.util.ArrayList refList;
 	public void monodroidAddReference (java.lang.Object obj)

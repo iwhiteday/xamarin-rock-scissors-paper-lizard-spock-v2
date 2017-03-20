@@ -1,11 +1,16 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
+using Android.Support.V7.App;
+using Com.Hitomi.Cmlibrary;
+using Android.Graphics;
+using System;
+using Com.Tapadoo.Alerter;
 
 namespace task2
 {
-    [Activity(Label = "Scissors win 100%", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "Scissors win 100%", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light.NoActionBar")]
+    public class MainActivity : AppCompatActivity, IOnMenuSelectedListener
     {
         GameModel model = new GameModel();
         Choice userChoice;
@@ -13,7 +18,6 @@ namespace task2
         string score = "0 - 0";
         TextView userChoiceView;
         TextView aiChoiceView;
-        TextView turnResultView;
         TextView scoreView;
 
         protected override void OnCreate(Bundle bundle)
@@ -25,88 +29,92 @@ namespace task2
             //the kostyl or not the kostyl, that's the question
             Rules.setup();
 
-            Button rockBtn = FindViewById<Button>(Resource.Id.btnRock);
-            rockBtn.Click += RockBtn_Click;
-
-            Button scissorsBtn = FindViewById<Button>(Resource.Id.btnScissors);
-            scissorsBtn.Click += ScissorsBtn_Click;
-
-            Button paperBtn = FindViewById<Button>(Resource.Id.btnPaper);
-            paperBtn.Click += PaperBtn_Click;
-
-            Button lizardBtn = FindViewById<Button>(Resource.Id.btnLizard);
-            lizardBtn.Click += LizardBtn_Click;
-
-            Button spockBtn = FindViewById<Button>(Resource.Id.btnSpock);
-            spockBtn.Click += SpockBtn_Click;
-
-            Button lockBtn = FindViewById<Button>(Resource.Id.btnLock);
-            lockBtn.Click += LockBtn_Click;
+            var circle_menu = FindViewById<CircleMenu>(Resource.Id.circleMenu);
+            circle_menu.SetMainMenu(Color.ParseColor("#CDCDCD"), Resource.Drawable.play, Resource.Drawable.close)
+                .AddSubMenu(Color.ParseColor("#258CFF"), Resource.Drawable.rock)
+                .AddSubMenu(Color.ParseColor("#258CFF"), Resource.Drawable.scissors)
+                .AddSubMenu(Color.ParseColor("#258CFF"), Resource.Drawable.paper)
+                .AddSubMenu(Color.ParseColor("#258CFF"), Resource.Drawable.lizard)
+                .AddSubMenu(Color.ParseColor("#258CFF"), Resource.Drawable.spock)
+                .SetOnMenuSelectedListener(this);
 
             userChoiceView = FindViewById<TextView>(Resource.Id.Yourchoice);
             aiChoiceView = FindViewById<TextView>(Resource.Id.AIchoice);
-            turnResultView = FindViewById<TextView>(Resource.Id.Result);
             scoreView = FindViewById<TextView>(Resource.Id.Score);
 
             startTurn();
         }
 
-        private void LockBtn_Click(object sender, System.EventArgs e)
+        private int getResourceIdByChoice(Choice choice)
+        {
+            switch(choice)
+            {
+                case (Choice.Rock):
+                    return Resource.Drawable.rock;
+                case (Choice.Scissors):
+                    return Resource.Drawable.scissors;
+                case (Choice.Paper):
+                    return Resource.Drawable.paper;
+                case (Choice.Lizard):
+                    return Resource.Drawable.lizard;
+                case (Choice.Spock):
+                    return Resource.Drawable.spock;
+                default:
+                    return Resource.Drawable.lose;
+
+            }
+        }
+
+        private void Lock()
         {
             if (userChoice == Choice.Emtpy) return; //might add notifier about empty choice
-            userChoiceView.Text += "\nYour choice hash: " + model.choiceHash(userChoice);
-            aiChoiceView.Text = "AI prev turn choice: " + aiChoice.ToString();
-            aiChoiceView.Text += "\nAI prev turn choice hash: " + model.choiceHash(aiChoice);
+
+            ImageView yourimg = FindViewById<ImageView>(Resource.Id.YourImage);
+            ImageView aiimg = FindViewById<ImageView>(Resource.Id.AIImage);
+
+            yourimg.SetImageResource(getResourceIdByChoice(userChoice));
+            aiimg.SetImageResource(getResourceIdByChoice(aiChoice));
+
+            aiChoiceView.Text = "String salt was: " + model.salt + " | Hash(" + model.salt + aiChoice.ToString() + ") = " + model.choiceHash(aiChoice);
 
             int turn_result = model.winDetermination(userChoice, aiChoice);
             string result = "";
+            int color = 0;
+            int icon = 0;
             switch(turn_result)
             {
                 case 1:
                     result = "You won!";
+                    color = Resource.Color.win;
+                    icon = Resource.Drawable.win;
                     break;
                 case -1:
-                    result = "AI won";
+                    result = "You lose :<";
+                    color = Resource.Color.lose;
+                    icon = Resource.Drawable.lose;
                     break;
                 case 0:
                     result = "Tie";
+                    color = Resource.Color.material_deep_teal_500;
+                    icon = Resource.Drawable.tie;
                     break;
             }
+            Alerter.Create(this)
+                .SetTitle(result)
+                .SetBackgroundColor(color)
+                .SetDuration(500)
+                .SetIcon(icon)
+                .Show();
             score = "You " + model.userScore + " - " + model.aiScore + " AI";
             scoreView.Text = score;
-            turnResultView.Text = result;
 
             startTurn();
         }
 
-        private void SpockBtn_Click(object sender, System.EventArgs e)
+        public void OnMenuSelected(int index)
         {
-            userChoiceView.Text = "Your choice this turn : Spock";
-            userChoice = Choice.Spock;
-        }
-
-        private void LizardBtn_Click(object sender, System.EventArgs e)
-        {
-            userChoiceView.Text = "Your choice this turn : Lizard";
-            userChoice = Choice.Lizard;
-        }
-
-        private void PaperBtn_Click(object sender, System.EventArgs e)
-        {
-            userChoiceView.Text = "Your choice this turn : Paper";
-            userChoice = Choice.Paper;
-        }
-
-        private void ScissorsBtn_Click(object sender, System.EventArgs e)
-        {
-            userChoiceView.Text = "Your choice this turn : Scissors";
-            userChoice = Choice.Scissors;
-        }
-
-        private void RockBtn_Click(object sender, System.EventArgs e)
-        {
-            userChoiceView.Text = "Your choice this turn : Rock";
-            userChoice = Choice.Rock;
+            userChoice = (Choice)(index + 1);
+            Lock();
         }
 
         private void startTurn()

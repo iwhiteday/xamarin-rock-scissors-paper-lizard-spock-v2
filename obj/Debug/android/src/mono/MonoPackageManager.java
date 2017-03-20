@@ -99,6 +99,15 @@ class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		/* We need to ensure that "task2.dll" comes first in this list. */
 		"task2.dll",
+		"Alerter.dll",
+		"CircleButton.dll",
+		"CircleMenu.dll",
+		"Xamarin.Android.Support.Animated.Vector.Drawable.dll",
+		"Xamarin.Android.Support.v4.dll",
+		"Xamarin.Android.Support.v7.AppCompat.dll",
+		"Xamarin.Android.Support.Vector.Drawable.dll",
+		"XamSvg.Droid.dll",
+		"XamSvg.Shared.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};

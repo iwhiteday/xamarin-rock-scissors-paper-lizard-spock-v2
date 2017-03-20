@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="task2.task2" android:versionCode="1" android:versionName="1.0">
   <!--suppress UsesMinSdkAttributes-->
-  <uses-sdk android:minSdkVersion="16" />
+  <uses-sdk android:minSdkVersion="21" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <application android:label="task2" android:name="android.app.Application" android:allowBackup="true" android:icon="@drawable/icon" android:debuggable="true">
-    <activity android:icon="@drawable/icon" android:label="Scissors win 100%" android:name="md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity">
+    <activity android:icon="@drawable/icon" android:label="Scissors win 100%" android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:name="md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -19,5 +19,7 @@
         <category android:name="mono.android.intent.category.SEPPUKU.task2.task2" />
       </intent-filter>
     </receiver>
+    <!-- This is just an Activity for Testing from within src/androidTest -->
+    <activity android:name="com.tapadoo.android.MockActivity" android:theme="@style/Base.Theme.AppCompat" />
   </application>
 </manifest>

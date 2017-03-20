@@ -15,14 +15,13 @@ namespace task2
 
     class GameModel
     {
-        private int salt = 41;
-        private int turn;
+        public string salt { get; private set; }
         public int userScore { get; private set; }
         public int aiScore { get; private set; }
 
         public GameModel()
         {
-            turn = 1;
+            salt = randomString(5);
             userScore = 0;
             aiScore = 0;
         }
@@ -36,7 +35,7 @@ namespace task2
 
         public int choiceHash(Choice choice)
         {
-            return (int)choice * salt * turn;
+            return (salt + choice.ToString()).GetHashCode();
         }
         //also got idea about generating random salt each turn
         //more random - less debug
@@ -44,7 +43,7 @@ namespace task2
 
         public int winDetermination(Choice userChoice, Choice aiChoice)
         {
-            turn++;
+            salt = randomString(5);
             //if user got win combination - win to user
             if (Rules.winCheck(new Combination() { winner = (int)userChoice, loser = (int)aiChoice }))
             {
@@ -59,6 +58,14 @@ namespace task2
             }
             //else tie
             return 0;
+        }
+
+        private string randomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
 
