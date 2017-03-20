@@ -1,0 +1,4 @@
+task2.MainActivity, task2;md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity
+task2.MainActivity, task2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity
+task2.MainActivity;md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity
+task2.MainActivity;md5c9c417ec3f0909d2eb891eac2f9fed84.MainActivity

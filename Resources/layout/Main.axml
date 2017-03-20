@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/Score"
+            android:text="@string/Score00"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/AIchoice"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Yourchoice"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Result"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_weight="1">
+    <Button
+        android:id="@+id/btnRock"
+        android:text="@string/Rock"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnPaper"
+        android:text="@string/Paper"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnScissors"
+        android:text="@string/Scissors"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnLizard"
+        android:text="@string/Lizard"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnSpock"
+        android:text="@string/Spock"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnLock"
+        android:text="@string/Lock"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1" />
+  </LinearLayout>
+</LinearLayout>
